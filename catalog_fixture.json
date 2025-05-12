@@ -1,0 +1,83 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "category_name": "Смартфоны",
+        "description": "Смартфоны, как средство не только коммуникации, но и получение дополнительных функций для удобства жизни"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "category_name": "Телевизоры",
+        "description": "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "product_name": "Samsung Galaxy S23 Ultra",
+        "description": "256GB, Серый цвет, 200MP камера",
+        "image": "photos/S23_Ultra.jpg",
+        "category": 1,
+        "price": "100000.00",
+        "created_at": "2025-05-10T10:55:39.207Z",
+        "updated_at": "2025-05-10T11:23:38.778Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "product_name": "55\" QLED 4K",
+        "description": "Фоновая подсветка",
+        "image": "photos/qled.jpg",
+        "category": 2,
+        "price": "123000.00",
+        "created_at": "2025-05-10T11:10:09.704Z",
+        "updated_at": "2025-05-10T11:25:05.624Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "product_name": "Hikers 85HTQ01",
+        "description": "Встроенная система шумоподавления",
+        "image": "photos/hikers.jpg",
+        "category": 2,
+        "price": "114000.00",
+        "created_at": "2025-05-10T11:15:51.047Z",
+        "updated_at": "2025-05-10T11:26:29.328Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "product_name": "Iphone 15",
+        "description": "512GB, Gray space",
+        "image": "photos/i_phone.jpg",
+        "category": 1,
+        "price": "210000.00",
+        "created_at": "2025-05-11T07:22:50.865Z",
+        "updated_at": "2025-05-11T07:23:14.959Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "product_name": "Xiaomi Redmi Note 11",
+        "description": "1024GB, Синий",
+        "image": "photos/readme.jpg",
+        "category": 1,
+        "price": "21000.00",
+        "created_at": "2025-05-11T07:24:31.601Z",
+        "updated_at": "2025-05-11T07:24:47.894Z"
+    }
+}
+]
