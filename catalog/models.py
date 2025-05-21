@@ -2,12 +2,8 @@ from django.db import models
 
 
 class Category(models.Model):
-    category_name = models.CharField(
-        max_length=100, verbose_name="Наименование", help_text="Введите наименование"
-    )
-    description = models.TextField(
-        verbose_name="Описание", help_text="Введите описание", blank=True, null=True
-    )
+    category_name = models.CharField(max_length=100, verbose_name="Наименование", help_text="Введите наименование")
+    description = models.TextField(verbose_name="Описание", help_text="Введите описание", blank=True, null=True)
 
     def __str__(self):
         return self.category_name
@@ -19,9 +15,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    product_name = models.CharField(
-        max_length=100, verbose_name="Наименование", help_text="Введите наименование"
-    )
+    product_name = models.CharField(max_length=100, verbose_name="Наименование", help_text="Введите наименование")
     description = models.TextField(
         verbose_name="Описание",
         help_text="Введите описание",
