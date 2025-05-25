@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+{% include "blog/headers.html" %}
+<div class="container mt-4">
+    <article>
+        <h1>{{ article.title }}</h1>
+        
+        <!-- Превью -->
+        {% if article.image %}
+        <img src="{{ article.image.url }}" 
+             class="img-fluid rounded mb-3" 
+             alt="{{ article.title }}">
+        {% endif %}
+
+        <!-- Контент -->
+        <div class="content mb-4">
+            {{ article.description|linebreaks }}
+        </div>
+
+        <!-- Мета-данные -->
+        <div class="card bg-light">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <small class="text-muted">
+                            Создано: {{ article.created_at|date:"d.m.Y H:i" }}
+                        </small>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <small class="text-muted">
+                            Просмотров: {{ article.views_count }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock %}
