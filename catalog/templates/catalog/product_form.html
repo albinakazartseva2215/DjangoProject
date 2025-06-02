@@ -1,11 +1,11 @@
-{% extends 'blog/base.html' %}
+{% extends 'catalog/base.html' %}
 
-{% block title %}Форма статьи{% endblock %}
+{% block title %}Форма продукта{% endblock %}
 
 {% block content %}
-{% include 'blog/headers.html' %}
+{% include 'catalog/header.html' %}
 <div class="container mt-4">
-    <h2 class="mb-4">{% if object %}Редактирование статьи{% else %}Создание статьи{% endif %}</h2>
+    <h2 class="mb-4">{% if object %}Редактирование продукта{% else %}Создание продукта{% endif %}</h2>
 
     <!-- Вывод ошибок формы -->
     {% if form.errors %}

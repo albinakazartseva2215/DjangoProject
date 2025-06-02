@@ -5,6 +5,11 @@
 {% block content %}
 {% include 'catalog/header.html' %}
 <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Создать новый продукт
+        </a>
+    </div>
     <div class="d-flex justify-content-center">
         {% for product in object_list %}
         <div class="card mb-4 box-shadow" style="width: 30rem; overflow: hidden;">
@@ -14,13 +19,25 @@
                 <h6 class="card-title">{{ product.product_name }}</h6>
                 <p class="card-text">{{ product.description|truncatechars:100 }}</p>
             </div>
-            <button
-                    type="button"
-                    class="btn btn-lg btn-block btn-outline-primary"
-                    onclick="window.location.href='product_detail/{{ product.pk }}'"
-            >
-                Подробно
-            </button>
+            <div class="mt-auto">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'catalog:product_detail' product.pk %}"
+                       class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-eye"></i> Просмотр
+                    </a>
+
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'catalog:product_update' product.pk %}"
+                           class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-pencil"></i> Обновить
+                        </a>
+                        <a href="{% url 'catalog:product_delete' product.pk %}"
+                           class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i> Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>

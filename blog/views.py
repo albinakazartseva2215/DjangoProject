@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from blog.forms import ArticleForm
 from blog.models import Article
 
 
@@ -29,17 +30,27 @@ class ArticleDetailView(DetailView):
 
 class ArticleCreateView(CreateView):
     model = Article
-    fields = ["title", "description", "image", "is_published"]
+    form_class = ArticleForm
     success_url = reverse_lazy("blog:blog_list")
 
 
 class ArticleUpdateView(UpdateView):
     model = Article
-    fields = ["title", "description", "image", "is_published", "views_count"]
+    form_class = ArticleForm
     success_url = reverse_lazy("blog:blog_list")
 
     def get_success_url(self):
         return reverse("blog:blog_detail", args=[self.kwargs.get('pk')])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"Редактирование статьи: {self.object.title}"
+        return context
+
+    def form_valid(self, form):
+        """Обработка валидной формы"""
+        # Просто сохраняем форму и перенаправляем на success_url
+        return super().form_valid(form)
 
 
 class ArticleDeleteView(DeleteView):
