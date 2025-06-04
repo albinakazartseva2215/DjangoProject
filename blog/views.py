@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -18,8 +19,12 @@ class ArticleListView(ListView):
         ).order_by('-created_at')  # Сортировка по дате создания
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
     model = Article
+    login_url = reverse_lazy('users:login')
+    success_url = reverse_lazy("blog:blog_list")
+
+
 
     def get_object(self, queryset=None):
         self.object = super().get_object(self.queryset)
@@ -28,15 +33,17 @@ class ArticleDetailView(DetailView):
         return self.object
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     form_class = ArticleForm
+    login_url = reverse_lazy('users:login')
     success_url = reverse_lazy("blog:blog_list")
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     form_class = ArticleForm
+    login_url = reverse_lazy('users:login')
     success_url = reverse_lazy("blog:blog_list")
 
     def get_success_url(self):
@@ -53,8 +60,9 @@ class ArticleUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
+    login_url = reverse_lazy('users:login')
     success_url = reverse_lazy("blog:blog_list")
 
 

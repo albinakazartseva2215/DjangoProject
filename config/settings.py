@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_REDIRECT_URL
 from dotenv import load_dotenv
 
 # Загружаем переменные окружения из файла .env
@@ -37,6 +38,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "users",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -145,3 +147,27 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = "/catalog/"
+
+LOGOUT_REDIRECT_URL = "/catalog/"
+
+# Автоматический выход при закрытии браузера
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Время жизни сессии в секундах (по умолчанию 1209600 - 2 недели)
+SESSION_COOKIE_AGE = 3600  # 1 час
+
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_URL = 'login'
