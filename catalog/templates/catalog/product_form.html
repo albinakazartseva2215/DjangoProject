@@ -27,6 +27,11 @@
                     {% if object %}Сохранить{% else %}Создать{% endif %}
                 </button>
                 <a href="{% url 'catalog:products_list' %}" class="btn btn-outline-secondary">Отмена</a>
+                {% if perms.catalog.can_unpublish_product %}
+                    <button type="submit" name="unpublish" class="btn-warning">
+                        Снять с публикации
+                    </button>
+                {% endif %}
             </div>
         </div>
     </form>

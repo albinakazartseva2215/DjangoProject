@@ -5,6 +5,7 @@ from users.models import User
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
+    """Класс используется для создания формы регистрации на основании модели User с заданными полями"""
     class Meta:
         model = User
         # exclude = ('created_at', 'updated_at')

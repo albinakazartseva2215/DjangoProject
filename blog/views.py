@@ -10,6 +10,7 @@ from blog.models import Article
 
 
 class ArticleListView(ListView):
+    """Класс просмотра списка статей"""
     model = Article
 
     def get_queryset(self):
@@ -20,6 +21,7 @@ class ArticleListView(ListView):
 
 
 class ArticleDetailView(LoginRequiredMixin, DetailView):
+    """Класс просмотра отдельной статьи"""
     model = Article
     login_url = reverse_lazy('users:login')
     success_url = reverse_lazy("blog:blog_list")
@@ -27,6 +29,7 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
 
 
     def get_object(self, queryset=None):
+        """Переопределенный метод, который при открытии статьи увеличивает счетчик просмотров статьи"""
         self.object = super().get_object(self.queryset)
         self.object.views_count += 1
         self.object.save(update_fields=['views_count'])
@@ -34,6 +37,7 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
 
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
+    """Класс создания(добавления) статьи"""
     model = Article
     form_class = ArticleForm
     login_url = reverse_lazy('users:login')
@@ -41,15 +45,19 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+    """Класс редактирования статьи"""
     model = Article
     form_class = ArticleForm
     login_url = reverse_lazy('users:login')
     success_url = reverse_lazy("blog:blog_list")
 
     def get_success_url(self):
+        """Переопределенный метод для перенаправления после успешного редактирования на просмотр этой статьи."""
         return reverse("blog:blog_detail", args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
+        """Переопределенный метод добавляет/изменяет пользовательские данные в контекст,
+        который передаётся в шаблон при рендеринге"""
         context = super().get_context_data(**kwargs)
         context['title'] = f"Редактирование статьи: {self.object.title}"
         return context
@@ -61,12 +69,14 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+    """Класс удаления статьи"""
     model = Article
     login_url = reverse_lazy('users:login')
     success_url = reverse_lazy("blog:blog_list")
 
 
 class ContactsView(View):
+    """Класс представления контактных данных с методом post получения данных пользователя из формы"""
 
     def get(self, request):
         return render(request, "blog/contacts.html")

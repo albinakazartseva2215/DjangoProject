@@ -11,13 +11,15 @@ from users.models import User
 
 
 class UserCreateView(CreateView):
+    """Класс создания пользователя"""
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:login')
 
     def form_valid(self, form):
+        """Метод переопределенный для регистрации пользователя с отправкой на почту ссылки для подтверждения"""
         user = form.save()
-        user.is_active = False
+        user.is_active = False  # пользователь не сможет войти, пока не активирует аккаунт
         token = secrets.token_hex(16)
         user.token = token
         user.save()
@@ -33,7 +35,8 @@ class UserCreateView(CreateView):
 
 
 def email_verification(request, token):
+    """метод, который обрабатывает подтверждение email по токену"""
     user = get_object_or_404(User, token=token)
-    user.is_active = True
+    user.is_active = True  # активирует учётную запись пользователя
     user.save()
     return redirect(reverse("users:login"))

@@ -3,6 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+    """Класс для создания модели пользователя с заданными полями"""
     username = None
     email = models.EmailField(unique=True, verbose_name="Email")
 
@@ -19,8 +20,10 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
+        """Meta класс, который задает конфигурационные параметры"""
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
     def __str__(self):
+        """Строковое представление класса"""
         return self.email

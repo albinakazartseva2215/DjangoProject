@@ -5,9 +5,14 @@ from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
+    """Класс наследуется от BaseCommand, используется для создания консольных команд, вызываемых через manage.py,
+    здесь используется для загрузки данных из фикстуры catalog_fixture.json в базу данных
+    с предварительным удалением всех данных"""
+    # help текст показывает для чего используется класс (краткое описание функционала)
     help = "Add test products to the database"
 
     def handle(self, *args, **kwargs):
+        """Главный метод в классе """
         Product.objects.all().delete()
         Category.objects.all().delete()
         call_command("loaddata", "catalog_fixture.json")
