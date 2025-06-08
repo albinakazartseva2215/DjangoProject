@@ -8,18 +8,25 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <form class="row" method="post" enctype="multipart/form-data">
-                <div class="card">
-                    <p class="card-text">Действительно хотите удалить {{ object.product_name }}</p>
-                    <div class="card-body">
-                        {% csrf_token %}
+            {% if product.owner == request.user or perms.catalog.delete_product %}
+                <form class="row" method="post" enctype="multipart/form-data">
+                    <div class="card">
+                        <p class="card-text">Действительно хотите удалить {{ object.product_name }}</p>
+                        <div class="card-body">
+                            {% csrf_token %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Удалить
+                        </button>
+                        <a href="{% url 'catalog:products_list' %}" class="btn btn-secondary">Отмена</a>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        Удалить
-                    </button>
-                    <a href="{% url 'catalog:products_list' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            {% else %}
+                <div class="alert alert-danger">
+                    <h4>Доступ запрещен</h4>
+                    <p>У вас нет прав для удаления товаров. Обратитесь к модератору или владельцу.</p>
                 </div>
-            </form>
+            {% endif %}
         </div>
     </div>
 </div>

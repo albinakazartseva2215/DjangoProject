@@ -4,6 +4,7 @@ from catalog.models import Product
 
 
 class StyleFormMixin:
+    """Класс-миксин, который используется для стилизации в других классах-формах"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for fiеld_name, fiеld in self.fields.items():
@@ -14,6 +15,7 @@ class StyleFormMixin:
 
 
 class ProductForm(StyleFormMixin, ModelForm):
+    """Класс используется для создания формы на основании модели Product"""
     FORBIDDEN_WORDS = [
         'казино',
         'криптовалюта',
@@ -26,9 +28,9 @@ class ProductForm(StyleFormMixin, ModelForm):
         'радар'
     ]
     class Meta:
+        """Meta класс, который задает конфигурационные параметры"""
         model = Product
-        # exclude = ('created_at', 'updated_at')
-        fields = '__all__'
+        exclude = ('is_published',)
 
     def clean_product_name(self):
         """Валидация названия продукта"""
@@ -68,7 +70,18 @@ class ProductForm(StyleFormMixin, ModelForm):
 
 
 class CategoryForm(StyleFormMixin, ModelForm):
+    """Класс используется для создания формы на основании модели Category"""
     class Meta:
+        """Meta класс, который задает конфигурационные параметры"""
         model = Product
         # exclude = ('created_at', 'updated_at')
         fields = '__all__'
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    """Класс используется для создания формы на основании прав доступа модели Product для группы модератор продуктов"""
+    class Meta:
+        """Meta класс, который задает конфигурационные параметры"""
+        model = Product
+        fields = '__all__'
+

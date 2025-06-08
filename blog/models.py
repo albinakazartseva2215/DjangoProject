@@ -1,6 +1,7 @@
 from django.db import models
 
 class Article(models.Model):
+    """Модель статьи с заданными полями и мета классом"""
     title = models.CharField(
         max_length=100,
         verbose_name="Заголовок статьи",
@@ -36,9 +37,11 @@ class Article(models.Model):
         blank=True
     )
     def __str__(self):
+        """Строковое представление класса"""
         return self.title
 
     class Meta:
+        """Meta класс, который задает конфигурационные параметры"""
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
         ordering = ["title"]

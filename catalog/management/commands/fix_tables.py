@@ -4,9 +4,13 @@ from django.apps import apps
 
 
 class Command(BaseCommand):
+    """Класс наследуется от BaseCommand, используется для создания консольных команд, вызываемых через manage.py,
+    создание недостающих таблиц в базе данных и проверка имеющихся"""
+    # help текст показывает для чего используется класс (краткое описание функционала)
     help = 'Create missing database tables'
 
     def handle(self, *args, **options):
+        """Главный метод в классе """
         # Получаем список существующих таблиц
         with connection.cursor() as cursor:
             cursor.execute("""
