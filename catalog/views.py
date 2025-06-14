@@ -2,13 +2,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
+from catalog.services import get_products_from_cache, get_products_by_category
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -53,6 +54,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_form_class(self):
+        "Использование формы в зависимости от права доступа"
         user = self.request.user
         product = self.get_object()
         if user.has_perm("can_unpublish_product"):
@@ -66,6 +68,10 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductListView(ListView):
     """Класс просмотра списка продуктов"""
     model = Product
+
+    def get_queryset(self):
+        """Получение списка продуктов из кэша"""
+        return get_products_from_cache()
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -99,3 +105,21 @@ class ContactsView(View):
         print(phone)
 
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
+
+
+class ProductsByCategoryView(ListView):
+    """Класс представления определенной категории продуктов"""
+    model = Product
+    template_name = 'products/category_products.html'
+    context_object_name = 'products_by_category'
+
+    def get_queryset(self):
+        """Возвращает продукты для указанной категории"""
+        self.category_id = self.kwargs['pk']
+        return get_products_by_category(pk=self.category_id)
+
+    def get_context_data(self, **kwargs):
+        """Добавляем категорию в контекст"""
+        context = super().get_context_data(**kwargs)
+        context['category'] = get_object_or_404(Category, id=self.category_id)
+        return context
