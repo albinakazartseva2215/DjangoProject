@@ -40,8 +40,8 @@
         <div class="col-6 col-md">
           <h5>Категория</h5>
           <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Смартфоны</a></li>
-            <li><a class="text-muted" href="#">Телевизоры</a></li>
+            <li><a class="text-muted" href="{% url 'catalog:products_by_category' 1 %}">Смартфоны</a></li>
+            <li><a class="text-muted" href="{% url 'catalog:products_by_category' 2 %}">Телевизоры</a></li>
           </ul>
         </div>
         <div class="col-6 col-md">

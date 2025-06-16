@@ -84,4 +84,3 @@ class ProductModeratorForm(StyleFormMixin, ModelForm):
         """Meta класс, который задает конфигурационные параметры"""
         model = Product
         fields = '__all__'
-
